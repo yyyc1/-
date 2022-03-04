@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>发帖</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    #add-box {
+      width: 40%;
+      height: auto;
+      margin: 0 auto;
+      margin-top: 10%;
+      padding: 20px 20px 10px 20px;
+      text-align: center;
+      border:2px solid black;
+      border-radius: 6px;
+    }
+    .item{
+      margin-top: 10px;
+    }
+    span{
+      position: relative;
+      bottom:140px;
+    }
+    button{
+      margin-top: 15px;
+      width: 150px;
+      height: 30px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+	<div id="add-box">
+      <h2 style="color: black;">发布帖子</h2>
+      <div class="form">
+        <form name="Form" action="../addnew.php" method="POST">
+          <div class="item">
+            标题：<input type="text" name="title" placeholder="起个标题吧" style="width: 350px "/>
+          </div>
+          <div class="item">
+           <span>内容：</span><textarea name="content" style="width: 350px; height: 150px"></textarea>
+          </div>
+          <button type="submit">发布</button>
+        </form>
+      </div>
+    </div>
+</body>
+</html>

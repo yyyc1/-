@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>详情</title>
+	<style type="text/css">
+		*{
+			margin: 0;padding: 0;
+		}
+		#top{
+			margin-top: 10px;width: 100%;
+		}
+		a{
+			margin-right: 20px;
+			margin-left: 20px;
+			text-decoration: none;
+		}
+		.note-list{
+			margin-top: 30px;
+			border:3px solid ;
+		}
+		.note-list-action{
+			height: 30px;
+		}
+
+		input{
+			width: 45px;
+		}
+    #add-box {
+      width: 40%;
+      height: auto;
+      margin: 0 auto;
+      margin-top: 2%;
+      padding: 20px 20px 10px 20px;
+      text-align: center;
+      border:2px solid black;
+      border-radius: 6px;
+    }
+    button{
+      margin-top: 15px;
+      width: 150px;
+      height: 30px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    #text{
+      position: relative;
+      bottom:140px;
+    }
+    .note-page {
+    overflow: hidden;
+    text-align: center;
+    line-height: 14px;
+	}
+
+	.note-page a {
+	    display: inline-block;
+	    margin: 0 3px;
+	    padding: 2px 12px;
+	    height: 24px;
+	    border: 1px solid #ccc;
+	    background: #fff;
+	    color: grey;
+	    text-decoration: none;
+	    font-size: 12px;
+	    line-height: 24px;
+	    transition: all .2s;
+	}
+
+	.note-page a:hover {
+	    border: 1px solid #2FAE36;
+	    color: #2FAE36;
+	}
+
+	.note-page span {
+	    display: inline-block;
+	    margin: 0 3px;
+	    padding: 2px 12px;
+	    border: 1px solid #ccc;
+	    background: #fcfcfc;
+	    color: #bbb;
+	    font-size: 12px;
+	    line-height: 24px;
+	}
+
+	.note-page p {
+	    margin: 1em 0;
+	}
+	</style>
+</head>
+<body>
+	<?php foreach($data1 as $v): ?>  
+          <div class="note-list">
+            楼主： <span><?php echo htmlspecialchars($v['username'])?></span>
+          	标题： <span><?=htmlspecialchars($v['title'])?></span><br/>
+          	内容： <span><?=htmlspecialchars($v['content'])?></span>
+          	(<?=format_date($v['time'])?>前 <?=date('H:i', $v['time'])?>)
+            <!-- <ul class="note-list-box">
+              <li class="note-list-name"></li>
+              <li class="note-list-title"></li>
+              <li class="note-list-content"></li>
+              <li class="note-list-date"></li>
+            </ul> -->
+            <div class="note-list-action">
+            	<form name="like_form" action="dolike.php" method="post">
+            		<input type="hidden" name="discuss_id" value="<?=htmlspecialchars($v['id'])?>">
+            		<input type="submit" name="like" value="👍:<?=htmlspecialchars($v['like_count'])?>">
+            	</form>
+          	</div>
+          </div> 
+        <?php endforeach; ?>
+        <?php  $floor=2;   ?>
+        <?php foreach($data2 as $v): ?>  
+          <div class="note-list">
+          	楼层：<?php  echo ($page-1)*$size+$floor++;   ?>楼<br/>
+          	用户名： <span><?php echo htmlspecialchars($v['username'])?></span><br/>
+          	内容： <span><?=htmlspecialchars($v['content'])?></span>
+          	(<?=format_date($v['time'])?>前 <?=date('H:i', $v['time'])?>)
+            <!-- <ul class="note-list-box">
+              <li class="note-list-name"></li>
+              <li class="note-list-title"></li>
+              <li class="note-list-content"></li>
+              <li class="note-list-date"></li>
+            </ul> -->
+            <div class="note-list-action">
+            	<form name="like_form" action="dolike_reply.php" method="post">
+            		<input type="hidden" name="reply_id" value="<?=htmlspecialchars($v['reply_id'])?>">
+            		<input type="submit" name="like" value="👍:<?=htmlspecialchars($v['like_count'])?>">
+            	</form>
+          	</div>
+          </div> 
+        <?php endforeach; ?>
+        <div id="add-box">
+      		<h2 style="color: black;">发表意见</h2>
+		      <div class="form">
+		        <form name="Form" action="doreply.php" method="POST">
+		          <div class="item">
+		           <span id="text">内容：</span><textarea name="content" style="width: 350px; height: 150px"></textarea>
+		           <input type="hidden" name="discuss_id" value="<?php echo $discuss_id?>">
+		          </div>
+		          <button type="submit">回复</button>
+		        </form>
+		      </div>
+    	</div>
+    	<div class="note-page">
+    	<?php   $url='./reply.php?discuss_id='.$discuss_id.'&page=';        ?>
+        <?=page_html($url, $total, $page, $size)?>
+      	</div>
+
+
+
+
+</body>
+</html>
